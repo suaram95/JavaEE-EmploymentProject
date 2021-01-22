@@ -25,17 +25,18 @@ public class UserManager {
         }
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO user(name,surname,age,gender,work_experience,username,password,staff_type,user_type) " +
-                            "VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "INSERT INTO user(name,surname,age,gender,phone_number,work_experience,username,password,staff_type,user_type) " +
+                            "VALUES(?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
             statement.setInt(3, user.getAge());
             statement.setString(4, user.getGender().name());
-            statement.setInt(5, user.getWorkExperience());
-            statement.setString(6, user.getUsername());
-            statement.setString(7, user.getPassword());
-            statement.setString(8, user.getStaffType().name());
-            statement.setString(9, user.getUserType().name());
+            statement.setString(5, user.getPhoneNumber());
+            statement.setInt(6, user.getWorkExperience());
+            statement.setString(7, user.getUsername());
+            statement.setString(8, user.getPassword());
+            statement.setString(9, user.getStaffType().name());
+            statement.setString(10, user.getUserType().name());
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -84,8 +85,8 @@ public class UserManager {
             if (resultSet.next()) {
                 return getUserFromResultSet(resultSet);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -104,7 +105,7 @@ public class UserManager {
         return userList;
     }
 
-    public void deleteUserById(int userId) {
+    public void removeUserById(int userId) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM user WHERE id=?");
             statement.setInt(1, userId);
@@ -121,13 +122,12 @@ public class UserManager {
                 .surname(resultSet.getString(3))
                 .age(resultSet.getInt(4))
                 .gender(Gender.valueOf(resultSet.getString(5)))
-                .workExperience(resultSet.getInt(6))
-                .username(resultSet.getString(7))
-                .password(resultSet.getString(8))
-                .staffType(StaffType.valueOf(resultSet.getString(9)))
-                .userType(UserType.valueOf(resultSet.getString(10)))
+                .phoneNumber(resultSet.getString(6))
+                .workExperience(resultSet.getInt(7))
+                .username(resultSet.getString(8))
+                .password(resultSet.getString(9))
+                .staffType(StaffType.valueOf(resultSet.getString(10)))
+                .userType(UserType.valueOf(resultSet.getString(11)))
                 .build();
     }
-
-
 }

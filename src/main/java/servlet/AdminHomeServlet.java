@@ -1,6 +1,5 @@
 package servlet;
 
-import com.sun.scenario.effect.impl.prism.PrImage;
 import manager.TaskManager;
 import manager.UserManager;
 import model.Task;
@@ -25,9 +24,10 @@ public class AdminHomeServlet extends HttpServlet {
         List<User> allUsers = userManager.getAllUsers();
         List<Task> allTasks = taskManager.getAllTasks();
 
-        req.setAttribute("allUsers", allUsers);
-        req.setAttribute("allTasks", allTasks);
-        req.getRequestDispatcher("/admin.jsp").forward(req,resp);
+        req.getSession().setAttribute("allUsers",allUsers);
+        req.getSession().setAttribute("allTasks",allTasks);
+        resp.sendRedirect("admin.jsp");
+
 
     }
 }

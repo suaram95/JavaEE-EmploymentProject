@@ -16,6 +16,7 @@ public class User {
     private String surname;
     private int age;
     private Gender gender;
+    private String phoneNumber;
     private int workExperience;
     private String username;
     private String password;

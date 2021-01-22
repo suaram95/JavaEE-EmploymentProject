@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/deleteUser")
-public class DeleteUserServlet extends HttpServlet {
+public class RemoveUserServlet extends HttpServlet {
 
     private UserManager userManager=new UserManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        userManager.deleteUserById(id);
+        userManager.removeUserById(id);
         resp.sendRedirect("/adminHome");
     }
 }

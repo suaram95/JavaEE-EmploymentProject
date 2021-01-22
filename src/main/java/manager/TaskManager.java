@@ -3,6 +3,7 @@ package manager;
 import com.sun.jmx.snmp.internal.SnmpAccessControlModel;
 import db.DBConnectionProvider;
 import model.Task;
+import model.TaskStatus;
 import util.DateUtil;
 
 import java.sql.*;
@@ -22,14 +23,15 @@ public class TaskManager {
     public void addTask(Task task) {
         try {
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO task(name,description,created_date,deadline,comment,user_id)" +
-                            "VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "INSERT INTO task(name,description,created_date,deadline,comment,status,user_id)" +
+                            "VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, task.getName());
             statement.setString(2, task.getDescription());
             statement.setString(3, DateUtil.getStringFromDate(task.getCreatedDate()));
             statement.setString(4, DateUtil.getStringFromDate(task.getDeadline()));
             statement.setString(5, task.getComment());
-            statement.setInt(6, task.getUser().getId());
+            statement.setString(6, task.getTaskStatus().name());
+            statement.setInt(7, task.getUser().getId());
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -55,6 +57,16 @@ public class TaskManager {
         return taskList;
     }
 
+    public void removeTaskById(int taskId) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM task WHERE id=?");
+            statement.setInt(1, taskId);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     private Task getTaskFromResultSet(ResultSet resultSet) throws SQLException {
         return Task.builder()
                 .id(resultSet.getInt(1))
@@ -63,7 +75,10 @@ public class TaskManager {
                 .createdDate(DateUtil.getDateFromString(resultSet.getString(4)))
                 .deadline(DateUtil.getDateFromString(resultSet.getString(5)))
                 .comment(resultSet.getString(6))
-                .user(userManager.getUserById(resultSet.getInt(7)))
+                .taskStatus(TaskStatus.valueOf(resultSet.getString(7)))
+                .user(userManager.getUserById(resultSet.getInt(8)))
                 .build();
     }
+
+
 }

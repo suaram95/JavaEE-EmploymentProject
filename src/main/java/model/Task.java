@@ -19,5 +19,6 @@ public class Task {
     private Date createdDate;
     private Date deadline;
     private String comment;
+    private TaskStatus taskStatus;
     private User user;
 }
