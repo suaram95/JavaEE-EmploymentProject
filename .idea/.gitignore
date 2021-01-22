@@ -7,7 +7,13 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-.idea
+
+compiler.xml
+jarRepositories.xml
+misc.xml
+modules.xml
+uiDesigner.xml
+vcs.xml
 
 
 
