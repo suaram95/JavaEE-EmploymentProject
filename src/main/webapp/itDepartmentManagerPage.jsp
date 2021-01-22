@@ -4,13 +4,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>ADMINISTRATIVE DEPARTMENT</title>
+    <title>IT DEPARTMENT</title>
 </head>
 <body>
 <%
     User currentUser = (User) request.getSession().getAttribute("currentUser");
-    List<User> userList = (List<User>) request.getAttribute("allAdminUsers");
-    List<Task> taskList = (List<Task>) request.getAttribute("allAdminTasks");
+    List<User> userList = (List<User>) request.getAttribute("allITUsers");
+    List<Task> taskList = (List<Task>) request.getAttribute("allITTasks");
 
     String addTaskMsg = "";
     if (request.getSession().getAttribute("addTaskMsg") != null) {
@@ -44,7 +44,7 @@
         Username: <input type="text" name="username"><br><br>
         Password: <input type="text" name="password"><br><br>
         Staff type: <select name="staffType">
-        <option value="ADMINISTRATIVE">ADMINISTRATIVE</option>
+        <option value="IT">IT</option>
     </select><br><br>
         User Type: <select name="userType">
         <option value="EMPLOYEE">EMPLOYEE</option>
@@ -64,7 +64,7 @@
         Comment: <input type="text" name="comment"><br>
         User: <select name="userId">
         <% for (User user : userList) {%>
-        <%if (user.getUserType() == UserType.EMPLOYEE && user.getStaffType() == StaffType.ADMINISTRATIVE) {%>
+        <%if (user.getUserType() == UserType.EMPLOYEE && user.getStaffType() == StaffType.IT) {%>
         <option value="<%=user.getId()%>"><%=user.getName() + " " + user.getSurname()%>
         </option>
         <%}%>
@@ -90,7 +90,7 @@
             <td>Action</td>
         </tr>
         <% for (Task task : taskList) {%>
-        <% if (task.getUser().getStaffType() == StaffType.ADMINISTRATIVE) {%>
+        <% if (task.getUser().getStaffType() == StaffType.IT) {%>
         <tr>
             <td><%=task.getId()%>
             </td>
@@ -119,7 +119,7 @@
 <br>
 
 <div style="border: 1px black solid">
-    <i><b>Administrative Department Employees:</b></i><br>
+    <i><b>IT Department Employees:</b></i><br>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -134,7 +134,7 @@
             <th>Employee</th>
         </tr>
         <% for (User user : userList) {%>
-        <%if (user.getStaffType() == StaffType.ADMINISTRATIVE) {%>
+        <%if (user.getStaffType() == StaffType.IT) {%>
         <tr>
             <td><%=user.getId()%>
             </td>

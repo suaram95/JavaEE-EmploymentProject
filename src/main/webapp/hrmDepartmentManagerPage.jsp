@@ -9,8 +9,8 @@
 <body>
 <%
     User currentUser = (User) request.getSession().getAttribute("currentUser");
-    List<User> userList = (List<User>) request.getAttribute("allAdminUsers");
-    List<Task> taskList = (List<Task>) request.getAttribute("allAdminTasks");
+    List<User> userList = (List<User>) request.getAttribute("allHRMUsers");
+    List<Task> taskList = (List<Task>) request.getAttribute("allHRMTasks");
 
     String addTaskMsg = "";
     if (request.getSession().getAttribute("addTaskMsg") != null) {
