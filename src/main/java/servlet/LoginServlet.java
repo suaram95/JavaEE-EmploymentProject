@@ -41,30 +41,10 @@ public class LoginServlet extends HttpServlet {
                         resp.sendRedirect("/adminHome");
                         break;
                     case SECTION_MANAGER:
-                        if (staffType == StaffType.ADMINISTRATIVE) {
-                            resp.sendRedirect("/adminDepManager");
-                        } else if (staffType == StaffType.ACCOUNTING) {
-                            resp.sendRedirect("/accountDepManager");
-                        } else if (staffType == StaffType.HRM) {
-                            resp.sendRedirect("/hrmDepManager");
-                        } else if (staffType == StaffType.IT) {
-                            resp.sendRedirect("/itDepManager");
-                        } else {
-                            resp.sendRedirect("/index.jsp");
-                        }
+                        resp.sendRedirect("/departmentManager");
                         break;
                     case EMPLOYEE:
-                        if (staffType == StaffType.ADMINISTRATIVE) {
-                            resp.sendRedirect("/adminDepEmployee");
-                        } else if (staffType == StaffType.ACCOUNTING) {
-                            resp.sendRedirect("/accountDepEmployee");
-                        } else if (staffType == StaffType.HRM) {
-                            resp.sendRedirect("/hrmDepEmployee");
-                        } else if (staffType == StaffType.IT) {
-                            resp.sendRedirect("/itDepEmployee");
-                        } else {
-                            resp.sendRedirect("/index.jsp");
-                        }
+                        resp.sendRedirect("/departmentEmployee");
                         break;
                     default:
                         resp.sendRedirect("/index.jsp");

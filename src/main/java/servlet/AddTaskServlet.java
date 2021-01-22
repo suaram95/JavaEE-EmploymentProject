@@ -2,10 +2,7 @@ package servlet;
 
 import manager.TaskManager;
 import manager.UserManager;
-import model.StaffType;
-import model.Task;
-import model.TaskStatus;
-import model.User;
+import model.*;
 import util.DateUtil;
 
 import javax.servlet.ServletException;
@@ -53,22 +50,16 @@ public class AddTaskServlet extends HttpServlet {
                     .build();
             taskManager.addTask(task);
             addTaskMsg.append("Task was successfully added!");
-            req.getSession().setAttribute("addTaskMsg", addTaskMsg.toString());
+
             User currentUser = (User) req.getSession().getAttribute("currentUser");
-            if (currentUser.getStaffType() == StaffType.ADMINISTRATIVE) {
-                resp.sendRedirect("/adminDepManager");
-            } else if (currentUser.getStaffType() == StaffType.ACCOUNTING) {
-                resp.sendRedirect("/accountDepManager");
-            } else if (currentUser.getStaffType() == StaffType.HRM) {
-                resp.sendRedirect("/hrmDepManager");
-            } else if (currentUser.getStaffType() == StaffType.IT) {
-                resp.sendRedirect("/itDepManager");
-            } else {
-                resp.sendRedirect("/");
+            if (currentUser!=null&&currentUser.getUserType()== UserType.SECTION_MANAGER){
+                req.getSession().setAttribute("addTaskMsg", addTaskMsg.toString());
+                resp.sendRedirect("/departmentManager");
             }
         } else {
             addTaskMsg.append("Something went wrong!");
             req.getSession().setAttribute("addTaskMsg", addTaskMsg.toString());
+            resp.sendRedirect("/departmentManager");
         }
     }
 }

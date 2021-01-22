@@ -66,24 +66,20 @@ public class RegisterServlet extends HttpServlet {
                 req.getSession().setAttribute("registerMsg",registerMsg.toString());
 
                 User currentUser = (User) req.getSession().getAttribute("currentUser");
-                StaffType currentUserStaffType = currentUser.getStaffType();
-                if (currentUserStaffType==StaffType.ADMINISTRATIVE){
-                    resp.sendRedirect("/adminDepManager");
-                } else if (currentUserStaffType==StaffType.ACCOUNTING){
-                    resp.sendRedirect("/accountDepManager");
-                } else if (currentUserStaffType==StaffType.HRM){
-                    resp.sendRedirect("/hrmDepManager");
-                } else if (currentUserStaffType==StaffType.IT){
-                    resp.sendRedirect("/itDepManager");
-                } else if (currentUser.getUserType()==UserType.ADMIN){
+                if (currentUser!=null&&currentUser.getUserType()==UserType.SECTION_MANAGER){
+                    resp.sendRedirect("/departmentManager");
+                } else if(currentUser!=null&&currentUser.getUserType()==UserType.ADMIN){
                     resp.sendRedirect("/adminHome");
-                } else {
-                    resp.sendRedirect("/");
                 }
             } catch (DuplicateUserException e) {
                 registerMsg.append("Manager with username: "+username+" already exists");
-                req.getSession().setAttribute("registerMsg",registerMsg.toString());
-                resp.sendRedirect("/adminHome");
+                req.getSession().setAttribute("registerMsg", registerMsg.toString());
+                User currentUser = (User) req.getSession().getAttribute("currentUser");
+                if (currentUser!=null&&currentUser.getUserType()==UserType.SECTION_MANAGER){
+                    resp.sendRedirect("/departmentManager");
+                } else if(currentUser!=null&&currentUser.getUserType()==UserType.ADMIN){
+                    resp.sendRedirect("/adminHome");
+                }
             }
         } else {
             resp.sendRedirect("/admin.jsp");

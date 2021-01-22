@@ -18,6 +18,6 @@ public class RemoveTaskServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String taskId = req.getParameter("id");
         taskManager.removeTaskById(Integer.parseInt(taskId));
-        resp.sendRedirect("/adminDepManager");
+        resp.sendRedirect("/departmentManager");
     }
 }
