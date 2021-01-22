@@ -18,8 +18,8 @@
 
     User currentUser = (User) request.getSession().getAttribute("currentUser");
 
-    List<User> userList = (List<User>) request.getSession().getAttribute("allUsers");
-    List<Task> taskList = (List<Task>) request.getSession().getAttribute("allTasks");
+    List<User> adminUserList = (List<User>) request.getSession().getAttribute("allAdminUsers");
+    List<Task> adminTaskList = (List<Task>) request.getSession().getAttribute("allAdminTasks");
 %>
 <a href="/logout">Logout</a><br>
 <b>Welcome <%=currentUser.getName() + " " + currentUser.getSurname() + " !"%>
@@ -72,7 +72,7 @@
             <th>User Type</th>
             <th>Action</th>
         </tr>
-        <% for (User user : userList) {%>
+        <% for (User user : adminUserList) {%>
         <tr>
             <td><%=user.getId()%>
             </td>
@@ -115,7 +115,7 @@
             <td>Status</td>
             <td>User</td>
         </tr>
-        <% for (Task task : taskList) {%>
+        <% for (Task task : adminTaskList) {%>
         <tr>
             <td><%=task.getId()%>
             </td>

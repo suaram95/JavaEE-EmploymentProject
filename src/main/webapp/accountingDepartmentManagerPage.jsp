@@ -9,8 +9,8 @@
 <body>
 <%
     User currentUser = (User) request.getSession().getAttribute("currentUser");
-    List<User> userList = (List<User>) request.getAttribute("allAccountUsers");
-    List<Task> taskList = (List<Task>) request.getAttribute("allAccountTasks");
+    List<User> userList = (List<User>) request.getSession().getAttribute("allUsers");
+    List<Task> taskList = (List<Task>) request.getSession().getAttribute("allTasks");
 
     String addTaskMsg = "";
     if (request.getSession().getAttribute("addTaskMsg") != null) {
@@ -74,7 +74,7 @@
     </form>
 </div>
 <br>
-
+<a href="/departmentManager">Refresh</a>
 <div style="border: 1px black solid">
     <i><b>Tasks of Employees:</b></i><br>
     <table border="1">
@@ -119,7 +119,7 @@
 <br>
 
 <div style="border: 1px black solid">
-    <i><b>Administrative Department Employees:</b></i><br>
+    <i><b>Accounting Department Employees:</b></i><br>
     <table border="1">
         <tr>
             <th>ID</th>

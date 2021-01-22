@@ -21,13 +21,11 @@ public class AdminHomeServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> allUsers = userManager.getAllUsers();
-        List<Task> allTasks = taskManager.getAllTasks();
+        List<User> allAdminUsers = userManager.getAllUsers();
+        List<Task> allAdminTasks = taskManager.getAllTasks();
 
-        req.getSession().setAttribute("allUsers",allUsers);
-        req.getSession().setAttribute("allTasks",allTasks);
+        req.getSession().setAttribute("allAdminUsers",allAdminUsers);
+        req.getSession().setAttribute("allAdminTasks",allAdminTasks);
         resp.sendRedirect("admin.jsp");
-
-
     }
 }

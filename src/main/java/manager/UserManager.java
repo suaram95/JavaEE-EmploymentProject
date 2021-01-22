@@ -27,16 +27,7 @@ public class UserManager {
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO user(name,surname,age,gender,phone_number,work_experience,username,password,staff_type,user_type) " +
                             "VALUES(?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getSurname());
-            statement.setInt(3, user.getAge());
-            statement.setString(4, user.getGender().name());
-            statement.setString(5, user.getPhoneNumber());
-            statement.setInt(6, user.getWorkExperience());
-            statement.setString(7, user.getUsername());
-            statement.setString(8, user.getPassword());
-            statement.setString(9, user.getStaffType().name());
-            statement.setString(10, user.getUserType().name());
+           initUserData(statement,user);
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -115,6 +106,32 @@ public class UserManager {
         }
     }
 
+    public void updateUserData(int currentUserId, User currentUser) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(
+                    "UPDATE user SET name=?,surname=?,age=?,gender=?,phone_number=?,work_experience=?,username=?,password=?,staff_type=?,user_type=? " +
+                            "WHERE id=?");
+            initUserData(statement,currentUser);
+            statement.setInt(11, currentUserId);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void initUserData(PreparedStatement statement, User currentUser) throws SQLException {
+        statement.setString(1, currentUser.getName());
+        statement.setString(2, currentUser.getSurname());
+        statement.setInt(3, currentUser.getAge());
+        statement.setString(4, currentUser.getGender().name());
+        statement.setString(5, currentUser.getPhoneNumber());
+        statement.setInt(6, currentUser.getWorkExperience());
+        statement.setString(7, currentUser.getUsername());
+        statement.setString(8, currentUser.getPassword());
+        statement.setString(9, currentUser.getStaffType().name());
+        statement.setString(10, currentUser.getUserType().name());
+    }
+
     private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
         return User.builder()
                 .id(resultSet.getInt(1))
@@ -130,4 +147,6 @@ public class UserManager {
                 .userType(UserType.valueOf(resultSet.getString(11)))
                 .build();
     }
+
+
 }

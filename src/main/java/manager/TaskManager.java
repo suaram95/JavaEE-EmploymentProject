@@ -43,6 +43,21 @@ public class TaskManager {
         }
     }
 
+    public List<Task> getTaskByUser(int userId) {
+        List<Task> taskList=new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE user_id=?");
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                taskList.add(getTaskFromResultSet(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return taskList;
+    }
+
     public List<Task> getAllTasks() {
         List<Task> taskList = new ArrayList<>();
         try {
@@ -55,6 +70,17 @@ public class TaskManager {
             e.printStackTrace();
         }
         return taskList;
+    }
+
+    public void updateTaskStatus(int taskId, String status) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE task SET status=? WHERE id=?");
+            statement.setString(1, status);
+            statement.setInt(2, taskId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeTaskById(int taskId) {
@@ -79,6 +105,4 @@ public class TaskManager {
                 .user(userManager.getUserById(resultSet.getInt(8)))
                 .build();
     }
-
-
 }
