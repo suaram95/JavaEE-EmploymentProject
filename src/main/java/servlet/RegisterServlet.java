@@ -66,9 +66,9 @@ public class RegisterServlet extends HttpServlet {
                 req.getSession().setAttribute("registerMsg",registerMsg.toString());
 
                 User currentUser = (User) req.getSession().getAttribute("currentUser");
-                if (currentUser!=null&&currentUser.getUserType()==UserType.SECTION_MANAGER){
+                if (currentUser.getUserType()==UserType.SECTION_MANAGER){
                     resp.sendRedirect("/departmentManager");
-                } else if(currentUser!=null&&currentUser.getUserType()==UserType.ADMIN){
+                } else if(currentUser.getUserType()==UserType.ADMIN){
                     resp.sendRedirect("/adminHome");
                 }
             } catch (DuplicateUserException e) {

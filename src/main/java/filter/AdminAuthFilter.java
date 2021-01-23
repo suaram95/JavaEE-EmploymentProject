@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebFilter(urlPatterns = {"/adminHome", "/deleteUser"})
+@WebFilter(urlPatterns = {"/adminHome", "/deleteUser",})
 public class AdminAuthFilter implements Filter {
 
     @Override
@@ -33,6 +33,4 @@ public class AdminAuthFilter implements Filter {
     public void destroy() {
 
     }
-
-
 }

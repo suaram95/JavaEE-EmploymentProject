@@ -51,11 +51,8 @@ public class AddTaskServlet extends HttpServlet {
             taskManager.addTask(task);
             addTaskMsg.append("Task was successfully added!");
 
-            User currentUser = (User) req.getSession().getAttribute("currentUser");
-            if (currentUser!=null&&currentUser.getUserType()== UserType.SECTION_MANAGER){
-                req.getSession().setAttribute("addTaskMsg", addTaskMsg.toString());
-                resp.sendRedirect("/departmentManager");
-            }
+            req.getSession().setAttribute("addTaskMsg", addTaskMsg.toString());
+            resp.sendRedirect("/departmentManager");
         } else {
             addTaskMsg.append("Something went wrong!");
             req.getSession().setAttribute("addTaskMsg", addTaskMsg.toString());

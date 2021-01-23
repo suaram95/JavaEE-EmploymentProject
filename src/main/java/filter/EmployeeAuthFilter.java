@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebFilter(urlPatterns = {"/departmentManager", "/addTask", "/deleteTask"})
-public class DepartmentManagerAuthFilter implements Filter {
+@WebFilter(urlPatterns = {"/changeTaskStatus", "/departmentEmployee", "/editEmployeeData"})
+public class EmployeeAuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -20,13 +19,15 @@ public class DepartmentManagerAuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request=(HttpServletRequest) servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         User currentUser = (User) request.getSession().getAttribute("currentUser");
-        if (currentUser!=null&&currentUser.getUserType()== UserType.SECTION_MANAGER){
+
+        if (currentUser!=null&&currentUser.getUserType()== UserType.EMPLOYEE){
             filterChain.doFilter(servletRequest,servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect("/index.jsp");
+            ((HttpServletResponse) servletResponse).sendRedirect("/");
         }
+
     }
 
     @Override
